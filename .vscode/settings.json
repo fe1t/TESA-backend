@@ -1,0 +1,43 @@
+{
+    "search.exclude": {
+        "**/node_modules": true,
+    },
+    "beautify.language": {
+        "js": {
+            "type": [
+                "javascript",
+                "json"
+            ],
+            "filename": [
+                ".eslintrc",
+                ".jsbeautifyrc"
+            ],
+            "ext": [
+                "js",
+                "json",
+                "tsx"
+            ]
+        },
+        "css": [
+            "css",
+            "scss"
+        ],
+        "html": [
+            "htm",
+            "html"
+        ]
+    },
+    "path-intellisense.absolutePathToWorkspace": true,
+    "path-intellisense.mappings": {
+        "src": "${workspaceRoot}/src",
+        "config": "${workspaceRoot}/config"
+    },
+    "path-intellisense.autoSlashAfterDirectory": true,
+    "editor.formatOnSave": true,
+    "prettier.semi": false,
+    "prettier.singleQuote": true,
+    "prettier.printWidth": 140,
+    "javascript.format.enable": false,
+    "files.trimTrailingWhitespace": true,
+    "eslint.enable": true
+}
