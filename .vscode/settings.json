@@ -27,12 +27,11 @@
             "html"
         ]
     },
-    "path-intellisense.absolutePathToWorkspace": true,
-    "path-intellisense.mappings": {
-        "src": "${workspaceRoot}/src",
-        "config": "${workspaceRoot}/config"
+    "path-autocomplete.pathMappings": {
+        "src": "${workspace}/src",
+        "config": "${workspace}/config"
     },
-    "path-intellisense.autoSlashAfterDirectory": true,
+    "path-autocomplete.enableFolderTrailingSlash": false,
     "editor.formatOnSave": true,
     "prettier.semi": false,
     "prettier.singleQuote": true,

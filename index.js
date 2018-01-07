@@ -1,4 +1,4 @@
-import { Animal } from './src/animal/schema'
+import { Animal } from 'src/animal/model'
 import assert from 'assert'
 import dbConfig from './config/db'
 import express from 'express'
