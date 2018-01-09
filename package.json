@@ -25,5 +25,15 @@
     "mongoose": "^5.0.0-rc2",
     "prettier": "^1.9.2",
     "prettierrc": "^0.0.0-5"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "camelcase-keys": "^4.2.0",
+    "ejs": "^2.5.7",
+    "global": "^4.3.2",
+    "http-status": "^1.0.1",
+    "nodemon": "^1.14.10",
+    "snake-case": "^2.1.0",
+    "snakeize": "^0.1.0"
   }
 }

@@ -29,6 +29,7 @@
     },
     "path-autocomplete.pathMappings": {
         "src": "${workspace}/src",
+        "common": "${workspace}/src/common",
         "config": "${workspace}/config"
     },
     "path-autocomplete.enableFolderTrailingSlash": false,

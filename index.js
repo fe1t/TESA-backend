@@ -1,4 +1,5 @@
 import { Animal } from 'src/animal/model'
+import Api from 'common/api'
 import assert from 'assert'
 import bodyParser from 'body-parser'
 import dbConfig from './config/db'
@@ -32,7 +33,7 @@ app.get('/temps', (req, res) => {
   const output = {
     fuck: [1, 2, 3, 4, 5]
   }
-  return res.end(JSON.stringify(output))
+  return res.json(output)
 })
 
 app.get('/humandities', (req, res) => {
@@ -40,6 +41,11 @@ app.get('/humandities', (req, res) => {
     humandities: [10, 20, 30, 40]
   }
   return res.end(JSON.stringify(output))
+})
+
+app.get('/tester', async (req, res) => {
+  const test = await Api.testApi()
+  return res.json({ success: test.data })
 })
 
 // eslint-disable-next-line no-console
