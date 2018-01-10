@@ -18,7 +18,7 @@ export const fetch = async () => {
   let data = await Api.getMagnetometer()
   data = data.data.data
   data.map(d => {
-    Magnetometer.find({ sensId: d.sensId }, (err, doc) => {
+    Magnetometer.find({ sensID: d.sensID }, (err, doc) => {
       if (doc.length) {
         console.log('Document Magnetometer already exists')
       } else {
@@ -41,8 +41,9 @@ export const showAll = (req, res) => {
 }
 
 export const filterByHourAgo = req => {
-  var currentDate = new Date()
-  var hourAgo = currentDate.getHours() - req.body.hourAgo
+  var hourAgo = new Date()
+  var hour = req.body.hourAgo || 0.5
+  hourAgo.setHours(hourAgo.getHours() - hour)
 
   Magnetometer.find({})
     .where('date')

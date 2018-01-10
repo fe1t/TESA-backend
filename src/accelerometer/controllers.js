@@ -17,8 +17,9 @@ export const testPost = req => {
 export const fetch = async () => {
   let data = await Api.getAccelerometer()
   data = data.data.data
+  console.log(data)
   data.map(d => {
-    Accelerometer.find({ sensId: d.sensId }, (err, doc) => {
+    Accelerometer.find({ sensID: d.sensID }, (err, doc) => {
       if (doc.length) {
         console.log('Document Accelerometer already exists')
       } else {
@@ -41,8 +42,9 @@ export const showAll = (req, res) => {
 }
 
 export const filterByHourAgo = req => {
-  var currentDate = new Date()
-  var hourAgo = currentDate.getHours() - req.body.hourAgo
+  var hourAgo = new Date()
+  var hour = req.body.hourAgo || 0.5
+  hourAgo.setHours(hourAgo.getHours() - hour)
 
   Accelerometer.find({})
     .where('date')

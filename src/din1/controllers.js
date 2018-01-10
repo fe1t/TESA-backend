@@ -18,7 +18,7 @@ export const fetch = async () => {
   let data = await Api.getDin1()
   data = data.data.data
   data.map(d => {
-    Din1.find({ sensId: d.sensId }, (err, doc) => {
+    Din1.find({ sensID: d.sensID }, (err, doc) => {
       if (doc.length) {
         console.log('Document Din1 already exists')
       } else {
@@ -41,8 +41,9 @@ export const showAll = (req, res) => {
 }
 
 export const filterByHourAgo = req => {
-  var currentDate = new Date()
-  var hourAgo = currentDate.getHours() - req.body.hourAgo
+  var hourAgo = new Date()
+  var hour = req.body.hourAgo || 0.5
+  hourAgo.setHours(hourAgo.getHours() - hour)
 
   Din1.find({})
     .where('date')

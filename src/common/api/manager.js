@@ -20,7 +20,8 @@ const api = axios.create({
     return data
   }),
   transformResponse: axios.defaults.transformResponse.concat(data => {
-    return camelcaseKeys(data || {}, { deep: true })
+    //return camelcaseKeys(data || {}, { deep: true })
+    return data
   }),
   httpsAgent: new https.Agent({ rejectUnauthorized: false })
 })

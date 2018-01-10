@@ -41,8 +41,9 @@ export const showAll = (req, res) => {
 }
 
 export const filterByHourAgo = req => {
-  var currentDate = new Date()
-  var hourAgo = currentDate.getHours() - req.body.hourAgo
+  var hourAgo = new Date()
+  var hour = req.body.hourAgo || 0.5
+  hourAgo.setHours(hourAgo.getHours() - hour)
 
   Temperature.find({})
     .where('date')
