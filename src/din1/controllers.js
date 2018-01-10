@@ -41,17 +41,17 @@ export const showAll = (req, res) => {
 }
 
 export const filterByHourAgo = req => {
-  var hourAgo = new Date()
-  var hour = req.body.hourAgo || 0.5
-  hourAgo.setHours(hourAgo.getHours() - hour)
+  let toDate = req.body.date
+  let fromDate = moment(selectedDate)
+    .subtract(30, 'minutes')
+    .toDate()
 
-  Din1.find({})
-    .where('date')
-    .gt(hourAgo)
-    .exec(function(err, din1s) {
-      if (err) throw err
-      return {
-        data: din1s
-      }
-    })
+  Din1.find({
+    $and: [{ date: { $gte: fromDate } }, { date: { $lte: toDate } }]
+  }).exec(function(err, din1s) {
+    if (err) throw err
+    return {
+      data: din1s
+    }
+  })
 }

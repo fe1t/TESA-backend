@@ -33,25 +33,25 @@ export const fetch = async () => {
 }
 
 export const showAll = (req, res) => {
-  Gyroscope.find({}).then(gyros => {
+  Gyroscope.find({}).then(gyroscopes => {
     res.json({
-      data: gyros
+      data: gyroscopes
     })
   })
 }
 
 export const filterByHourAgo = req => {
-  var hourAgo = new Date()
-  var hour = req.body.hourAgo || 0.5
-  hourAgo.setHours(hourAgo.getHours() - hour)
+  let toDate = req.body.date
+  let fromDate = moment(selectedDate)
+    .subtract(30, 'minutes')
+    .toDate()
 
-  Gyroscope.find({})
-    .where('date')
-    .gt(hourAgo)
-    .exec(function(err, gyroscopes) {
-      if (err) throw err
-      return {
-        data: gyroscopes
-      }
-    })
+  Gyroscope.find({
+    $and: [{ date: { $gte: fromDate } }, { date: { $lte: toDate } }]
+  }).exec(function(err, gyroscopes) {
+    if (err) throw err
+    return {
+      data: gyroscopes
+    }
+  })
 }
