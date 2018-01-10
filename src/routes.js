@@ -24,7 +24,7 @@ apiRouter.use('/magnetometer', magnetometerApi)
 apiRouter.use('/pressure', pressureApi)
 apiRouter.use('/temperature', temperatureApi)
 apiRouter.get('/fetchAll', (req, res) => {
-  fetchAll()
+  fetchAll(req, res)
 })
 
 router.use('/animals', animalRouter)

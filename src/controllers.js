@@ -14,4 +14,5 @@ export const fetchAll = (req, res) => {
   fetchMagnetometer()
   fetchPressure()
   fetchTemperature()
+  res.send('Fetched :D Successfully ')
 }
