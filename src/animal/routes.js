@@ -1,7 +1,9 @@
-import bodyParser from 'body-parser'
 import express from 'express'
 
-let app = express()
-app.use(bodyParser.json())
+let router = express.Router()
 
-export default app
+router.get('/', (req, res) => {
+  res.render('index')
+})
+
+export default router
