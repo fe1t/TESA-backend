@@ -35,7 +35,7 @@ export const fetch = async () => {
 export const showAll = (req, res) => {
   Humidity.find({}).then(humandities => {
     res.json({
-      humandities
+      data: humandities
     })
   })
 }

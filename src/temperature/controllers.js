@@ -35,7 +35,7 @@ export const fetch = async () => {
 export const showAll = (req, res) => {
   Temperature.find({}).then(temperatures => {
     res.json({
-      temperatures
+      data: temperatures
     })
   })
 }

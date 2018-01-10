@@ -35,7 +35,7 @@ export const fetch = async () => {
 export const showAll = (req, res) => {
   Din1.find({}).then(din1s => {
     res.json({
-      din1s
+      data: din1s
     })
   })
 }

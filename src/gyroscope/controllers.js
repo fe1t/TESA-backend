@@ -35,7 +35,7 @@ export const fetch = async () => {
 export const showAll = (req, res) => {
   Gyroscope.find({}).then(gyros => {
     res.json({
-      gyros
+      data: gyros
     })
   })
 }

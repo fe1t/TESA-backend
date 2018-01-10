@@ -35,7 +35,7 @@ export const fetch = async () => {
 export const showAll = (req, res) => {
   Pressure.find({}).then(pressures => {
     res.json({
-      pressures
+      data: pressures
     })
   })
 }

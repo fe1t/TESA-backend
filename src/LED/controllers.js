@@ -35,7 +35,7 @@ export const fetch = async () => {
 export const showAll = (req, res) => {
   LED.find({}).then(leds => {
     res.json({
-      leds
+      data: leds
     })
   })
 }

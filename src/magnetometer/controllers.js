@@ -35,7 +35,7 @@ export const fetch = async () => {
 export const showAll = (req, res) => {
   Magnetometer.find({}).then(magnetometers => {
     res.json({
-      magnetometers
+      data: magnetometers
     })
   })
 }

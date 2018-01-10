@@ -36,7 +36,7 @@ export const fetch = async () => {
 export const showAll = (req, res) => {
   Accelerometer.find({}).then(accelerometers => {
     res.json({
-      accelerometers
+      data: accelerometers
     })
   })
 }

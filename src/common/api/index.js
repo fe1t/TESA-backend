@@ -1,6 +1,6 @@
 import api from './manager'
 
-const teamId = 11
+const teamId = 37
 
 const Api = {
   getAccelerometer() {
