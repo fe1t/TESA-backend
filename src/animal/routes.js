@@ -1,9 +1,12 @@
+import * as controllers from './controllers'
+
 import express from 'express'
+import routeUtils from 'common/utils/routes'
 
-let router = express.Router()
+export const router = express.Router()
+export const apiRouter = express.Router()
 
-router.get('/', (req, res) => {
-  res.render('index')
-})
+apiRouter.get('/test', routeUtils.apiResponse(controllers.testGetApi))
+apiRouter.post('/testPost', routeUtils.apiResponse(controllers.testPost))
 
-export default router
+router.get('/', routeUtils.pageResponse('index', controllers.testGetApi))

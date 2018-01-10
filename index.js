@@ -1,6 +1,6 @@
-import { Animal } from 'src/animal/model'
-import Api from 'common/api'
-import animal from 'src/animal/routes'
+import { apiRouter, router } from 'src/routes'
+
+import { Animal } from 'src/animal/models'
 import assert from 'assert'
 import bodyParser from 'body-parser'
 import dbConfig from './config/db'
@@ -10,7 +10,9 @@ import mongoose from 'mongoose'
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use('/animal', animal)
+app.use('/api', apiRouter)
+app.use('/site', router)
+
 app.set('view engine', 'ejs')
 
 mongoose.connect(dbConfig.url + dbConfig.name, {})
