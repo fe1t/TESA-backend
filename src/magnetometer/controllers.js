@@ -51,7 +51,7 @@ export const filterByHourAgo = req => {
     .exec(function(err, magnetometers) {
       if (err) throw err
       return {
-        magnetometers
+        data: magnetometers
       }
     })
 }

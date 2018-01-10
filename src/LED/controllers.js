@@ -51,7 +51,7 @@ export const filterByHourAgo = req => {
     .exec(function(err, leds) {
       if (err) throw err
       return {
-        leds
+        data: leds
       }
     })
 }

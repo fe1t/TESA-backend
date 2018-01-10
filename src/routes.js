@@ -9,6 +9,7 @@ import { apiRouter as pressureApi, router as pressureRouter } from 'src/pressure
 import { apiRouter as temperatureApi, router as temperatureRouter } from 'src/temperature/routes'
 
 import express from 'express'
+import { fetchAll } from 'src/controllers'
 
 export const apiRouter = express.Router()
 export const router = express.Router()
@@ -22,5 +23,8 @@ apiRouter.use('/Led', ledApi)
 apiRouter.use('/magnetometer', magnetometerApi)
 apiRouter.use('/pressure', pressureApi)
 apiRouter.use('/temperature', temperatureApi)
+apiRouter.get('/fetchAll', (req, res) => {
+  fetchAll()
+})
 
 router.use('/animals', animalRouter)

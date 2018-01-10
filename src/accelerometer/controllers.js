@@ -17,7 +17,6 @@ export const testPost = req => {
 export const fetch = async () => {
   let data = await Api.getAccelerometer()
   data = data.data.data
-  console.log(data)
   data.map(d => {
     Accelerometer.find({ sensID: d.sensID }, (err, doc) => {
       if (doc.length) {
@@ -52,7 +51,7 @@ export const filterByHourAgo = req => {
     .exec(function(err, accelerometers) {
       if (err) throw err
       return {
-        accelerometers
+        data: accelerometers
       }
     })
 }

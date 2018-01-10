@@ -51,7 +51,7 @@ export const filterByHourAgo = req => {
     .exec(function(err, gyroscopes) {
       if (err) throw err
       return {
-        gyroscopes
+        data: gyroscopes
       }
     })
 }

@@ -51,7 +51,7 @@ export const filterByHourAgo = req => {
     .exec(function(err, temperatures) {
       if (err) throw err
       return {
-        temperatures
+        data: temperatures
       }
     })
 }
