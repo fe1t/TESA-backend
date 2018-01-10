@@ -8,5 +8,6 @@ export const apiRouter = express.Router()
 
 apiRouter.get('/test', routeUtils.apiResponse(controllers.testGetApi))
 apiRouter.post('/testPost', routeUtils.apiResponse(controllers.testPost))
+apiRouter.get('/test2', routeUtils.apiResponse(controllers.list))
 
 router.get('/', routeUtils.pageResponse('index', controllers.testGetApi))

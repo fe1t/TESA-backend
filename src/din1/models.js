@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
 const din1 = mongoose.Schema({
-  teamID: {
-    type: Number
-  },
+  // teamID: {
+  //   type: Number
+  // },
   sensID: {
     type: String
   },

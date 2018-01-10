@@ -8,7 +8,7 @@ import snakeize from 'snakeize'
 const camelcaseKeys = require('camelcase-keys')
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/temps',
+  baseURL: 'http://10.0.0.10/api',
   transformRequest: axios.defaults.transformRequest.concat((data, headers) => {
     // TODO: make localStorage singleton with Autocheck Storage Exists
     try {

@@ -1,5 +1,5 @@
 import Api from 'src/common/api/index'
-import { LED } from './models'
+import { Humidity } from './models'
 
 export const testGetApi = () => {
   return {
@@ -15,17 +15,17 @@ export const testPost = req => {
 }
 
 export const fetch = async () => {
-  let data = await Api.getLed()
+  let data = await Api.getHumidity()
   data = data.data.data
   data.map(d => {
-    LED.find({ sensId: d.sensId }, (err, doc) => {
+    Humidity.find({ sensId: d.sensId }, (err, doc) => {
       if (doc.length) {
-        console.log('Document LED already exists')
+        console.log('Document Humidity already exists')
       } else {
-        let D = new LED(d)
+        let D = new Humidity(d)
         D.save(err => {
           if (err) throw err
-          console.log('Successfully saved LED.')
+          console.log('Successfully saved Humidity.')
         })
       }
     })
@@ -33,9 +33,9 @@ export const fetch = async () => {
 }
 
 export const showAll = (req, res) => {
-  LED.find({}).then(leds => {
+  Humidity.find({}).then(humandities => {
     res.json({
-      leds
+      humandities
     })
   })
 }
@@ -44,13 +44,13 @@ export const filterByHourAgo = req => {
   var currentDate = new Date()
   var hourAgo = currentDate.getHours() - req.body.hourAgo
 
-  LED.find({})
+  Humidity.find({})
     .where('date')
     .gt(hourAgo)
-    .exec(function(err, leds) {
+    .exec(function(err, humandities) {
       if (err) throw err
       return {
-        leds
+        humandities
       }
     })
 }

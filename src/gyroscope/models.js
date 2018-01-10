@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
-const gyrometerSchema = mongoose.Schema({
-  teamID: {
-    type: Number
-  },
+const gyroscopeSchema = mongoose.Schema({
+  // teamID: {
+  //   type: Number
+  // },
   sensID: {
     type: String
   },
@@ -22,4 +22,4 @@ const gyrometerSchema = mongoose.Schema({
   }
 })
 
-export const Gyrometer = mongoose.model('Gyrometer', gyrometerSchema)
+export const Gyroscope = mongoose.model('Gyroscope', gyroscopeSchema)

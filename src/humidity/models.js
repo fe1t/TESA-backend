@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
-const humanditySchema = mongoose.Schema({
-  teamID: {
-    type: Number
-  },
+const humiditySchema = mongoose.Schema({
+  // teamID: {
+  //   type: Number
+  // },
   sensID: {
     type: String
   },
@@ -16,4 +16,4 @@ const humanditySchema = mongoose.Schema({
   }
 })
 
-export const Humandity = mongoose.model('Humandity', humanditySchema)
+export const Humidity = mongoose.model('Humidity', humiditySchema)

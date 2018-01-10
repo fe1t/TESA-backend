@@ -1,5 +1,5 @@
 import Api from 'src/common/api/index'
-import { LED } from './models'
+import { Magnetometer } from './models'
 
 export const testGetApi = () => {
   return {
@@ -15,17 +15,17 @@ export const testPost = req => {
 }
 
 export const fetch = async () => {
-  let data = await Api.getLed()
+  let data = await Api.getMagnetometer()
   data = data.data.data
   data.map(d => {
-    LED.find({ sensId: d.sensId }, (err, doc) => {
+    Magnetometer.find({ sensId: d.sensId }, (err, doc) => {
       if (doc.length) {
-        console.log('Document LED already exists')
+        console.log('Document Magnetometer already exists')
       } else {
-        let D = new LED(d)
+        let D = new Magnetometer(d)
         D.save(err => {
           if (err) throw err
-          console.log('Successfully saved LED.')
+          console.log('Successfully saved Magnetometer.')
         })
       }
     })
@@ -33,9 +33,9 @@ export const fetch = async () => {
 }
 
 export const showAll = (req, res) => {
-  LED.find({}).then(leds => {
+  Magnetometer.find({}).then(magnetometers => {
     res.json({
-      leds
+      magnetometers
     })
   })
 }
@@ -44,13 +44,13 @@ export const filterByHourAgo = req => {
   var currentDate = new Date()
   var hourAgo = currentDate.getHours() - req.body.hourAgo
 
-  LED.find({})
+  Magnetometer.find({})
     .where('date')
     .gt(hourAgo)
-    .exec(function(err, leds) {
+    .exec(function(err, magnetometers) {
       if (err) throw err
       return {
-        leds
+        magnetometers
       }
     })
 }
