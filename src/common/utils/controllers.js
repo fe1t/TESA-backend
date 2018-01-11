@@ -99,8 +99,6 @@ export default {
       .subtract(minute, 'minutes')
       .toDate()
 
-    console.log(currentDate)
-    console.log(toDate)
     return Model.find({
       $and: [{ date: { $gte: toDate } }, { date: { $lte: currentDate } }]
     })

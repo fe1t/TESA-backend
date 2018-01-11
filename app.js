@@ -3,9 +3,11 @@ import bodyParser from 'body-parser'
 import dbConfig from './config/db'
 import express from 'express'
 import mongoose from 'mongoose'
+import compression from 'compression'
 import { updateTask } from 'src/cron'
 
 const app = express()
+app.use(compression())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/api', apiRouter)
