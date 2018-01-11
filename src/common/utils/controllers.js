@@ -16,6 +16,7 @@ export default {
   fetch: (req, res, Model, getModel, teamId) => {
     return new Promise(async (resolve, reject) => {
       const teamID = teamId || req.params.teamId
+      console.log(teamID)
       let data = await getModel(teamID)
       let ret = { teamId: teamID }
       if (data.data.statusCode != '00') {
