@@ -1,5 +1,6 @@
 import Api from 'src/common/api/index'
 import { Temperature } from './models'
+import moment from 'moment'
 
 export const testGetApi = () => {
   return {

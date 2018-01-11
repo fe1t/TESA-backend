@@ -1,5 +1,6 @@
 import Api from 'src/common/api/index'
 import { Din1 } from './models'
+import moment from 'moment'
 
 export const testGetApi = () => {
   return {
@@ -22,6 +23,7 @@ export const fetch = async () => {
       if (doc.length) {
         console.log('Document Din1 already exists')
       } else {
+        d.teamID = 37
         let D = new Din1(d)
         D.save(err => {
           if (err) throw err
