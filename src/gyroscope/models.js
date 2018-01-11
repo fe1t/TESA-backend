@@ -5,16 +5,16 @@ const gyroscopeSchema = mongoose.Schema({
     type: Number
   },
   sensID: {
-    type: String
+    type: Number
   },
   val_x: {
-    type: String
+    type: Number
   },
   val_y: {
-    type: String
+    type: Number
   },
   val_z: {
-    type: String
+    type: Number
   },
   date: {
     type: Date,

@@ -5,10 +5,10 @@ const LEDSchema = mongoose.Schema({
     type: Number
   },
   sensID: {
-    type: String
+    type: Number
   },
   val: {
-    type: String
+    type: Number
   },
   date: {
     type: Date,
