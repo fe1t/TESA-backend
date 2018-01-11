@@ -7,5 +7,5 @@ export const fetchUpdate = (req, res, teamId, N) =>
   controllerUtils.fetchUpdate(req, res, Magnetometer, Api.getRecentMagnetometer, teamId, N)
 export const showAll = (req, res) => controllerUtils.showAll(req, res, Magnetometer)
 export const showLastTwenty = (req, res) => controllerUtils.showLastTwenty(req, res, Magnetometer)
-export const filterByHourAgo = req => controllerUtils.filterByHourAgo(req, Magnetometer)
+export const filterByTimeAgo = req => controllerUtils.filterByTimeAgo(req, Magnetometer)
 export const filterByTimeRange = (req, res) => controllerUtils.filterByTimeRange(req, res, Magnetometer)

@@ -71,11 +71,14 @@ export default {
   },
 
   showAll: (req, res, Model) => {
-    Model.find().then(data => {
-      res.json({
+    return Model.find()
+      .sort('-date')
+      .then(data => ({
         data
-      })
-    })
+      }))
+      .catch(err => ({
+        data: err
+      }))
   },
 
   showLastTwenty: (req, res, Model) => {
@@ -90,20 +93,22 @@ export default {
       })
   },
 
-  filterByHourAgo: (req, Model) => {
-    let toDate = req.body.date
-    let fromDate = moment(toDate)
-      .subtract(30, 'minutes')
+  filterByTimeAgo: (req, Model, minute = 60) => {
+    let currentDate = new Date()
+    let toDate = moment(currentDate)
+      .subtract(minute, 'minutes')
       .toDate()
 
-    Model.find({
-      $and: [{ date: { $gte: fromDate } }, { date: { $lte: toDate } }]
-    }).exec((err, data) => {
-      if (err) throw err
-      return {
-        data
-      }
+    console.log(currentDate)
+    console.log(toDate)
+    return Model.find({
+      $and: [{ date: { $gte: toDate } }, { date: { $lte: currentDate } }]
     })
+      .then(data => ({ data }))
+      .catch(err => {
+        console.log('error')
+        return Promise.resolve({ data: err })
+      })
   },
 
   filterByTimeRange: (req, res, Model) => {

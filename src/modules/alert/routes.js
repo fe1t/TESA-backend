@@ -6,4 +6,4 @@ import express from 'express'
 export const apiRouter = express.Router()
 
 apiRouter.post('/', Api.apiResponseAsync(controllers.add))
-apiRouter.get('/', Api.apiResponseAsync(controllers.show))
+apiRouter.get('/:N?', Api.apiResponseAsync(req => controllers.show(req)))

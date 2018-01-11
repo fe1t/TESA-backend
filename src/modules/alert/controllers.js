@@ -4,8 +4,8 @@ import Api from 'src/common/api/index'
 export const add = async (req, res) => {
   return new Promise((resolve, reject) => {
     let d = {}
-    d.teamId = req.body.teamId
-    if (!d.tempId) return reject({ message: 'Team id cannot be empty' })
+    d.teamID = req.body.teamID
+    if (!d.teamID) return reject({ message: 'Team id cannot be empty' })
     d.description = req.body.description
 
     const D = new Alert(d)
@@ -20,10 +20,8 @@ export const add = async (req, res) => {
 }
 
 export const show = req => {
-  return new Promise((resolve, reject) => {
-    Alert.find()
-      .sort('date')
-      .then(data => resolve({ data }))
-      .catch(err => reject({ data: err }))
-  })
+  let N = req.params.N
+  let alert = Alert.find().sort('date')
+  if (N) alert = alert.limit(N)
+  return alert.then(data => ({ data })).catch(err => ({ data: err }))
 }

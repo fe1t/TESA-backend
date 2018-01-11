@@ -1,4 +1,4 @@
-import { fetchAll, fetchUpdateAll, filterAll } from './controllers'
+import { fetchAll, fetchUpdateAll, filterAll, showAllSensors } from './controllers'
 
 import { apiRouter as accelerometerApi } from 'modules/accelerometer/routes'
 import { apiRouter as alertApi } from 'modules/alert/routes'
@@ -27,6 +27,9 @@ apiRouter.get('/fetchAll', (req, res) => {
 })
 apiRouter.get('/fetchUpdateAll', (req, res) => {
   fetchUpdateAll(req, res).then(() => res.json())
+})
+apiRouter.get('/allTeamSensor', (req, res) => {
+  showAllSensors(req, res)
 })
 apiRouter.get('/allTeamSensor/:startTime/:endTime', (req, res) => {
   filterAll(req, res)

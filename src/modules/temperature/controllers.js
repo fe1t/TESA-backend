@@ -6,5 +6,5 @@ export const fetch = (req, res, teamId) => controllerUtils.fetch(req, res, Tempe
 export const fetchUpdate = (req, res, teamId, N) => controllerUtils.fetchUpdate(req, res, Temperature, Api.getRecentTemperature, teamId, N)
 export const showAll = (req, res) => controllerUtils.showAll(req, res, Temperature)
 export const showLastTwenty = (req, res) => controllerUtils.showLastTwenty(req, res, Temperature)
-export const filterByHourAgo = req => controllerUtils.filterByHourAgo(req, Temperature)
+export const filterByTimeAgo = req => controllerUtils.filterByTimeAgo(req, Temperature)
 export const filterByTimeRange = (req, res) => controllerUtils.filterByTimeRange(req, res, Temperature)

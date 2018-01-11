@@ -68,3 +68,17 @@ export const filterAll = (req, res) => {
     res.json(ret)
   })
 }
+
+export const showAllSensors = (req, res) => {
+  let ret = []
+  Promise.all([
+    accelerometerController.filterByTimeAgo(req, res),
+    din1Controller.filterByTimeAgo(req, res),
+    temperatureController.filterByTimeAgo(req, res)
+  ]).then(arrayOfData => {
+    arrayOfData.forEach(d => {
+      ret = ret.concat(d)
+    })
+    res.json(ret)
+  })
+}
