@@ -9,6 +9,7 @@ import { apiRouter as magnetometerApi, router as magnetometerRouter } from 'src/
 import { apiRouter as pressureApi, router as pressureRouter } from 'src/pressure/routes'
 import { apiRouter as temperatureApi, router as temperatureRouter } from 'src/temperature/routes'
 
+import { apiRouter as alertApi } from 'src/alert/routes'
 import express from 'express'
 
 export const apiRouter = express.Router()

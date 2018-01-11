@@ -1,6 +1,6 @@
 import api from './manager'
 
-const Api = {
+export default {
   getAccelerometer(teamId) {
     return api.get(`/accelerometer/${teamId}/all`)
   },
@@ -26,5 +26,3 @@ const Api = {
     return api.get(`/temperature/${teamId}/all`)
   }
 }
-
-export default Api

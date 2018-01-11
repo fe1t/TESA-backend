@@ -38,7 +38,8 @@ export const fetchAll = async (req, res) => {
 
 export const filterAll = (req, res) => {
   let ret = []
-  Promise.all([filterAccelerometer(req, res), filterDin1(req, res), filterTemperature(req, res)]).then(arrayOfData => {
+  Promise.all([filterAccelerometer(req, res)]).then(arrayOfData => {
+    // Promise.all([filterAccelerometer(req, res), filterDin1(req, res), filterTemperature(req, res)]).then(arrayOfData => {
     arrayOfData.forEach(d => {
       ret = ret.concat(d)
     })
