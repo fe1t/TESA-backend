@@ -15,22 +15,44 @@ export const testPost = req => {
   }
 }
 
-export const fetch = async () => {
-  let data = await Api.getDin1()
-  data = data.data.data
-  data.map(d => {
-    Din1.find({ sensID: d.sensID }, (err, doc) => {
-      if (doc.length) {
-        console.log('Document Din1 already exists')
-      } else {
-        d.teamID = 37
-        let D = new Din1(d)
-        D.save(err => {
-          if (err) throw err
-          console.log('Successfully saved Din1.')
+export const fetch = (req, res, teamId) => {
+  let resolveMessage = ''
+  return new Promise(async (resolve, reject) => {
+    const teamID = teamId || req.params.teamId
+    let data = await Api.getDin1(teamID)
+    let ret = { teamId: teamID }
+    if (data.data.statusCode != '00') {
+      ret.message = 'Sensor data not found'
+      return resolve(ret)
+    }
+    data = data.data.data
+    const waiter = await Promise.all(
+      data.map(d =>
+        Din1.find({ sensID: d.sensID }, (err, doc) => {
+          return new Promise((resolve, reject) => {
+            if (doc.length) {
+              resolveMessage = 'Din1 already exists'
+              console.log(teamID, resolveMessage)
+              resolve(resolveMessage)
+            } else {
+              d.teamID = teamID
+              let D = new Din1(d)
+              D.save(err => {
+                if (err) {
+                  console.log(err)
+                  resolve(err)
+                }
+                resolveMessage = 'Successfully saved Din1'
+                console.log(teamID, resolveMessage)
+                resolve(resolveMessage)
+              })
+            }
+          })
         })
-      }
-    })
+      )
+    )
+    ret.message = 'Successfully saved'
+    resolve(ret)
   })
 }
 

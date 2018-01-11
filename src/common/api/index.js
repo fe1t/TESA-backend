@@ -1,30 +1,28 @@
 import api from './manager'
 
-const teamId = 37
-
 const Api = {
-  getAccelerometer() {
+  getAccelerometer(teamId) {
     return api.get(`/accelerometer/${teamId}/all`)
   },
-  getDin1() {
+  getDin1(teamId) {
     return api.get(`/din1/${teamId}/all`)
   },
-  getGyroscope() {
+  getGyroscope(teamId) {
     return api.get(`/gyroscope/${teamId}/all`)
   },
-  getHumidity() {
+  getHumidity(teamId) {
     return api.get(`/humidity/${teamId}/all`)
   },
-  getLed() {
+  getLed(teamId) {
     return api.get(`/leds/${teamId}/all`)
   },
-  getMagnetometer() {
+  getMagnetometer(teamId) {
     return api.get(`/magnetometer/${teamId}/all`)
   },
-  getPressure() {
+  getPressure(teamId) {
     return api.get(`/pressure/${teamId}/all`)
   },
-  getTemperature() {
+  getTemperature(teamId) {
     return api.get(`/temperature/${teamId}/all`)
   }
 }

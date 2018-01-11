@@ -7,16 +7,26 @@ import { fetch as fetchMagnetometer, filterByTimeRange as filterMagnetometer } f
 import { fetch as fetchPressure, filterByTimeRange as filterPressure } from './pressure/controllers'
 import { fetch as fetchTemperature, filterByTimeRange as filterTemperature } from './temperature/controllers'
 
-export const fetchAll = (req, res) => {
-  fetchAccelerometer()
-  fetchGyroscope()
-  fetchDin1()
-  fetchHumidity()
-  fetchLed()
-  fetchMagnetometer()
-  fetchPressure()
-  fetchTemperature()
-  res.send('Fetched :D Successfully ')
+export const fetchAll = async (req, res) => {
+  let a = []
+  for (var teamId = 1; teamId <= 2; teamId++) {
+    a.push(
+      fetchAccelerometer(req, res, teamId),
+      // fetchGyroscope(req, res, teamId),
+      fetchDin1(req, res, teamId),
+      // fetchHumidity(req, res, teamId),
+      // fetchLed(req, res, teamId),
+      // fetchMagnetometer(req, res, teamId),
+      // fetchPressure(req, res, teamId),
+      fetchTemperature(req, res, teamId)
+    )
+  }
+  return await Promise.all(a)
+    .then(() => res.json({ status: 'Done fetching' }))
+    .catch(err => {
+      console.log(err)
+      res.json({ status: 'Error' })
+    })
 }
 
 export const filterAll = (req, res) => {
