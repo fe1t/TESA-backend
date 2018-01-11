@@ -22,6 +22,6 @@ export const add = async (req, res) => {
 export const show = req => {
   let N = req.params.N
   let alert = Alert.find().sort('date')
-  if (N) alert = alert.limit(N)
+  if (N) alert = alert.limit(parseInt(N))
   return alert.then(data => ({ data })).catch(err => ({ data: err }))
 }

@@ -82,7 +82,7 @@ export default {
   },
 
   showLastTwenty: (req, res, Model) => {
-    const N = Number(req.params.number) || 20
+    const N = parseInt(req.params.number) || 20
     Model.find()
       .sort('-date')
       .limit(N)
@@ -93,7 +93,7 @@ export default {
       })
   },
 
-  filterByTimeAgo: (req, Model, minute = 60) => {
+  filterByTimeAgo: (req, Model, minute = 1) => {
     let currentDate = new Date()
     let toDate = moment(currentDate)
       .subtract(minute, 'minutes')
