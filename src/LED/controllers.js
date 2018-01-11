@@ -26,23 +26,31 @@ export const fetch = (req, res, teamId) => {
     }
     data = data.data.data
     const waiter = await Promise.all(
-      data.map(d =>
-        LED.find({ sensID: d.sensID })
-          .then(doc => {
-            if (doc.length) {
-              console.log(teamID, 'LED already exists')
-            } else {
-              d.teamID = teamID
-              let D = new LED(d)
-              D.save(err => {
-                if (err) throw err
-                console.log(teamID, 'Successfully saved LED')
-              })
-            }
+      data.map(
+        d => {
+          d.teamID = teamID
+          let D = new LED(d)
+          D.save(err => {
+            if (err) throw err
+            console.log(teamID, 'Successfully saved LED')
           })
-          .catch(err => {
-            console.log(err)
-          })
+        }
+        // LED.find({ sensID: d.sensID })
+        //   .then(doc => {
+        //     if (doc.length) {
+        //       console.log(teamID, 'LED already exists')
+        //     } else {
+        //       d.teamID = teamID
+        //       let D = new LED(d)
+        //       D.save(err => {
+        //         if (err) throw err
+        //         console.log(teamID, 'Successfully saved LED')
+        //       })
+        //     }
+        //   })
+        //   .catch(err => {
+        //     console.log(err)
+        //   })
       )
     )
     ret.message = 'Successfully saved'

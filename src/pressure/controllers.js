@@ -26,23 +26,31 @@ export const fetch = (req, res, teamId) => {
     }
     data = data.data.data
     const waiter = await Promise.all(
-      data.map(d =>
-        Pressure.find({ sensID: d.sensID })
-          .then(doc => {
-            if (doc.length) {
-              console.log(teamID, 'Pressure already exists')
-            } else {
-              d.teamID = teamID
-              let D = new Pressure(d)
-              D.save(err => {
-                if (err) throw err
-                console.log(teamID, 'Successfully saved Pressure')
-              })
-            }
+      data.map(
+        d => {
+          d.teamID = teamID
+          let D = new Pressure(d)
+          D.save(err => {
+            if (err) throw err
+            console.log(teamID, 'Successfully saved Pressure')
           })
-          .catch(err => {
-            console.log(err)
-          })
+        }
+        // Pressure.find({ sensID: d.sensID })
+        //   .then(doc => {
+        //     if (doc.length) {
+        //       console.log(teamID, 'Pressure already exists')
+        //     } else {
+        //       d.teamID = teamID
+        //       let D = new Pressure(d)
+        //       D.save(err => {
+        //         if (err) throw err
+        //         console.log(teamID, 'Successfully saved Pressure')
+        //       })
+        //     }
+        //   })
+        //   .catch(err => {
+        //     console.log(err)
+        //   })
       )
     )
     ret.message = 'Successfully saved'

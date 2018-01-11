@@ -15,6 +15,7 @@ export const apiRouter = express.Router()
 export const router = express.Router()
 
 apiRouter.use('/accelerometer', accelerometerApi)
+apiRouter.use('/alert', alertApi)
 apiRouter.use('/animals', animalApi)
 apiRouter.use('/din1', din1Api)
 apiRouter.use('/gyroscope', gyroscopeApi)

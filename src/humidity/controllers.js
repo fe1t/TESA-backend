@@ -26,23 +26,31 @@ export const fetch = (req, res, teamId) => {
     }
     data = data.data.data
     const waiter = await Promise.all(
-      data.map(d =>
-        Humidity.find({ sensID: d.sensID })
-          .then(doc => {
-            if (doc.length) {
-              console.log(teamID, 'Humidity already exists')
-            } else {
-              d.teamID = teamID
-              let D = new Humidity(d)
-              D.save(err => {
-                if (err) throw err
-                console.log(teamID, 'Successfully saved Humidity')
-              })
-            }
+      data.map(
+        d => {
+          d.teamID = teamID
+          let D = new Humidity(d)
+          D.save(err => {
+            if (err) throw err
+            console.log(teamID, 'Successfully saved Humidity')
           })
-          .catch(err => {
-            console.log(err)
-          })
+        }
+        // Humidity.find({ sensID: d.sensID })
+        //   .then(doc => {
+        //     if (doc.length) {
+        //       console.log(teamID, 'Humidity already exists')
+        //     } else {
+        //       d.teamID = teamID
+        //       let D = new Humidity(d)
+        //       D.save(err => {
+        //         if (err) throw err
+        //         console.log(teamID, 'Successfully saved Humidity')
+        //       })
+        //     }
+        //   })
+        //   .catch(err => {
+        //     console.log(err)
+        //   })
       )
     )
     ret.message = 'Successfully saved'

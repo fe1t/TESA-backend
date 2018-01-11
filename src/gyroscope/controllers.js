@@ -26,23 +26,31 @@ export const fetch = (req, res, teamId) => {
     }
     data = data.data.data
     const waiter = await Promise.all(
-      data.map(d =>
-        Gyroscope.find({ sensID: d.sensID })
-          .then(doc => {
-            if (doc.length) {
-              console.log(teamID, 'Gyroscope already exists')
-            } else {
-              d.teamID = teamID
-              let D = new Gyroscope(d)
-              D.save(err => {
-                if (err) throw err
-                console.log(teamID, 'Successfully saved Gyroscope')
-              })
-            }
+      data.map(
+        d => {
+          d.teamID = teamID
+          let D = new Gyroscope(d)
+          D.save(err => {
+            if (err) throw err
+            console.log(teamID, 'Successfully saved Gyroscope')
           })
-          .catch(err => {
-            console.log(err)
-          })
+        }
+        // Gyroscope.find({ sensID: d.sensID })
+        //   .then(doc => {
+        //     if (doc.length) {
+        //       console.log(teamID, 'Gyroscope already exists')
+        //     } else {
+        //       d.teamID = teamID
+        //       let D = new Gyroscope(d)
+        //       D.save(err => {
+        //         if (err) throw err
+        //         console.log(teamID, 'Successfully saved Gyroscope')
+        //       })
+        //     }
+        //   })
+        //   .catch(err => {
+        //     console.log(err)
+        //   })
       )
     )
     ret.message = 'Successfully saved'

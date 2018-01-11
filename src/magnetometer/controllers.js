@@ -26,23 +26,31 @@ export const fetch = (req, res, teamId) => {
     }
     data = data.data.data
     const waiter = await Promise.all(
-      data.map(d =>
-        Magnetometer.find({ sensID: d.sensID })
-          .then(doc => {
-            if (doc.length) {
-              console.log(teamID, 'Magnetometer already exists')
-            } else {
-              d.teamID = teamID
-              let D = new Magnetometer(d)
-              D.save(err => {
-                if (err) throw err
-                console.log(teamID, 'Successfully saved Magnetometer')
-              })
-            }
+      data.map(
+        d => {
+          d.teamID = teamID
+          let D = new Magnetometer(d)
+          D.save(err => {
+            if (err) throw err
+            console.log(teamID, 'Successfully saved Magnetometer')
           })
-          .catch(err => {
-            console.log(err)
-          })
+        }
+        // Magnetometer.find({ sensID: d.sensID })
+        //   .then(doc => {
+        //     if (doc.length) {
+        //       console.log(teamID, 'Magnetometer already exists')
+        //     } else {
+        //       d.teamID = teamID
+        //       let D = new Magnetometer(d)
+        //       D.save(err => {
+        //         if (err) throw err
+        //         console.log(teamID, 'Successfully saved Magnetometer')
+        //       })
+        //     }
+        //   })
+        //   .catch(err => {
+        //     console.log(err)
+        //   })
       )
     )
     ret.message = 'Successfully saved'
