@@ -8,7 +8,8 @@
         "alias": {
           "src": "./src",
           "common": "./src/common",
-          "config": "./config"
+          "config": "./config",
+          "modules": "./src/modules"
         }
       }
     ]

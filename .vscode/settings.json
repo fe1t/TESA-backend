@@ -32,7 +32,8 @@
     "path-autocomplete.pathMappings": {
         "src": "${workspace}/src",
         "common": "${workspace}/src/common",
-        "config": "${workspace}/config"
+        "config": "${workspace}/config",
+        "modules": "${workspace}/src/modules"
     },
     "path-autocomplete.enableFolderTrailingSlash": false,
     "editor.formatOnSave": true,

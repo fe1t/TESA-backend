@@ -1,5 +1,16 @@
 import moment from 'moment'
 
+const saveObject = (D, d) => {
+  return D.save()
+    .then(() => {
+      console.log(teamID, 'Successfully saved Model')
+      return Promise.resolve()
+    })
+    .catch(err => {
+      return Promise.resolve(err)
+    })
+}
+
 export default {
   fetch: (req, res, Model, getModel, teamId) => {
     return new Promise(async (resolve, reject) => {
@@ -12,29 +23,49 @@ export default {
       }
       data = data.data.data
       const waiter = await Promise.all(
-        data.map(
-          d => {
-            // Model.find({ sensID: d.sensID })
-            //   .then(doc => {
-            //     if (doc.length) {
-            //       console.log(teamID, 'Model already exists')
-            //     } else {
-            d.teamID = teamID
-            let D = new Model(d)
-            D.save(err => {
-              if (err) throw err
-              console.log(teamID, 'Successfully saved Model')
-            })
-          }
-          //     }
-          //   })
-          //   .catch(err => {
-          //     console.log(err)
-          //   })
-        )
-      )
+        data.map(d => {
+          d.teamID = teamID
+          let D = new Model(d)
+          return saveObject(D, d)
+        })
+      ).then(() => {
+        console.log(`Done fetching [${teamID}]`)
+      })
       ret.message = 'Successfully saved'
-      console.log(`Done fetching [${teamID}]`)
+      resolve(ret)
+    })
+  },
+
+  fetchUpdate: (req, res, Model, getModel, teamId, N) => {
+    return new Promise(async (resolve, reject) => {
+      const teamID = teamId || req.params.teamId
+      let data = await getModel(teamID)
+      let ret = { teamId: teamID }
+      if (data.data.statusCode != '00') {
+        ret.message = 'Sensor data not found'
+        return resolve(ret)
+      }
+      data = data.data.data
+      const waiter = await Promise.all(
+        data.map(d => {
+          return Model.find({ $and: [{ sensID: d.sensID }, { teamID: teamID }] })
+            .then(doc => {
+              if (doc.length) {
+                console.log(teamID, 'Model already exists')
+              } else {
+                d.teamID = teamID
+                let D = new Model(d)
+                return saveObject(D, d)
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        })
+      ).then(() => {
+        console.log(`Done fetching [${teamID}]`)
+      })
+      ret.message = 'Successfully saved'
       resolve(ret)
     })
   },
@@ -48,9 +79,10 @@ export default {
   },
 
   showLastTwenty: (req, res, Model) => {
+    const N = Number(req.params.number) || 20
     Model.find()
       .sort('-date')
-      .limit(Number(req.params.number))
+      .limit(N)
       .then(data => {
         res.json({
           data

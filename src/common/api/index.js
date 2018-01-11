@@ -24,5 +24,30 @@ export default {
   },
   getTemperature(teamId) {
     return api.get(`/temperature/${teamId}/all`)
+  },
+
+  getRecentAccelerometer(teamId, N = 3) {
+    return api.get(`/accelerometer/${teamId}/${N}`)
+  },
+  getRecentDin1(teamId, N = 3) {
+    return api.get(`/din1/${teamId}/${N}`)
+  },
+  getRecentGyroscope(teamId, N = 3) {
+    return api.get(`/gyroscope/${teamId}/${N}`)
+  },
+  getRecentHumidity(teamId, N = 3) {
+    return api.get(`/humidity/${teamId}/${N}`)
+  },
+  getRecentLed(teamId, N = 3) {
+    return api.get(`/leds/${teamId}/${N}`)
+  },
+  getRecentMagnetometer(teamId, N = 3) {
+    return api.get(`/magnetometer/${teamId}/${N}`)
+  },
+  getRecentPressure(teamId, N = 3) {
+    return api.get(`/pressure/${teamId}/${N}`)
+  },
+  getRecentTemperature(teamId, N = 3) {
+    return api.get(`/temperature/${teamId}/${N}`)
   }
 }
