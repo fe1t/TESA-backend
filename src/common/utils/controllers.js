@@ -1,12 +1,13 @@
 import moment from 'moment'
 
-const saveObject = (D, d) => {
+const saveObject = (D, d, teamID) => {
   return D.save()
     .then(() => {
       console.log(teamID, 'Successfully saved Model')
       return Promise.resolve()
     })
     .catch(err => {
+      console.log(err)
       return Promise.resolve(err)
     })
 }
@@ -26,7 +27,7 @@ export default {
         data.map(d => {
           d.teamID = teamID
           let D = new Model(d)
-          return saveObject(D, d)
+          return saveObject(D, d, teamID)
         })
       ).then(() => {
         console.log(`Done fetching [${teamID}]`)
@@ -55,7 +56,7 @@ export default {
               } else {
                 d.teamID = teamID
                 let D = new Model(d)
-                return saveObject(D, d)
+                return saveObject(D, d, teamID)
               }
             })
             .catch(err => {

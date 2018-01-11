@@ -1,49 +1,20 @@
-import {
-  fetch as fetchAccelerometer,
-  fetchUpdate as fetchUpdateAccelerometer,
-  filterByTimeRange as filterAccelerometer
-} from 'modules/accelerometer/controllers'
-import { fetch as fetchDin1, fetchUpdate as fetchUpdateDin1, filterByTimeRange as filterDin1 } from 'modules/din1/controllers'
-import {
-  fetch as fetchGyroscope,
-  fetchUpdate as fetchUpdateGyroscope,
-  filterByTimeRange as filterGyroscope
-} from 'modules/gyroscope/controllers'
-import {
-  fetch as fetchHumidity,
-  fetchUpdate as fetchUpdateHumidity,
-  filterByTimeRange as filterHumidity
-} from 'modules/humidity/controllers'
-import { fetch as fetchLed, fetchUpdate as fetchUpdateLed, filterByTimeRange as filterLed } from 'modules/LED/controllers'
-import {
-  fetch as fetchMagnetometer,
-  fetchUpdate as fetchUpdateMagnetometer,
-  filterByTimeRange as filterMagnetometer
-} from 'modules/magnetometer/controllers'
-import {
-  fetch as fetchPressure,
-  fetchUpdate as fetchUpdatePressure,
-  filterByTimeRange as filterPressure
-} from 'modules/pressure/controllers'
-import {
-  fetch as fetchTemperature,
-  fetchUpdate as fetchUpdateTemperature,
-  filterByTimeRange as filterTemperature
-} from 'modules/temperature/controllers'
+import * as accelerometerController from 'modules/accelerometer/controllers'
+import * as din1Controller from 'modules/din1/controllers'
+import * as gyroscopeController from 'modules/gyroscope/controllers'
+import * as humidityController from 'modules/humidity/controllers'
+import * as ledController from 'modules/LED/controllers'
+import * as magnetomerController from 'modules/magnetometer/controllers'
+import * as pressureController from 'modules/pressure/controllers'
+import * as temperatureController from 'modules/temperature/controllers'
 
 export const fetchAll = async (req, res) => {
   let a = []
   let error = false
   for (var teamId = 1; teamId <= 60; teamId++) {
     a.push(
-      fetchAccelerometer(req, res, teamId),
-      // fetchGyroscope(req, res, teamId),
-      fetchDin1(req, res, teamId),
-      // fetchHumidity(req, res, teamId),
-      // fetchLed(req, res, teamId),
-      // fetchMagnetometer(req, res, teamId),
-      // fetchPressure(req, res, teamId),
-      fetchTemperature(req, res, teamId)
+      accelerometerController.fetch(req, res, teamId),
+      din1Controller.fetch(req, res, teamId),
+      temperatureController.fetch(req, res, teamId)
     )
     if (teamId % 10 == 0) {
       console.log('fetching ', teamId)
@@ -65,14 +36,9 @@ export const fetchUpdateAll = async (req, res) => {
   let error = false
   for (var teamId = 1; teamId <= 60; teamId++) {
     a.push(
-      fetchUpdateAccelerometer(req, res, teamId),
-      // fetchUpdateGyroscope(req, res, teamId),
-      fetchUpdateDin1(req, res, teamId),
-      // fetchUpdateHumidity(req, res, teamId),
-      // fetchUpdateLed(req, res, teamId),
-      // fetchUpdateMagnetometer(req, res, teamId),
-      // fetchUpdatePressure(req, res, teamId),
-      fetchUpdateTemperature(req, res, teamId)
+      accelerometerController.fetchUpdate(req, res, teamId),
+      din1Controller.fetchUpdate(req, res, teamId),
+      temperatureController.fetchUpdate(req, res, teamId)
     )
     if (teamId % 10 == 0) {
       console.log('fetching ', teamId)
@@ -91,12 +57,14 @@ export const fetchUpdateAll = async (req, res) => {
 
 export const filterAll = (req, res) => {
   let ret = []
-  console.log('fuck')
-  // fetchUpdateAccelerometer(req, res).then(data => res.json(data))
-  // Promise.all([filterAccelerometer(req, res), filterDin1(req, res), filterTemperature(req, res)]).then(arrayOfData => {
-  //   arrayOfData.forEach(d => {
-  //     ret = ret.concat(d)
-  //   })
-  //   res.json(ret)
-  // })
+  Promise.all([
+    accelerometerController.filterByTimeRange(req, res),
+    din1Controller.filterByTimeRange(req, res),
+    temperatureController.filterByTimeRange(req, res)
+  ]).then(arrayOfData => {
+    arrayOfData.forEach(d => {
+      ret = ret.concat(d)
+    })
+    res.json(ret)
+  })
 }
