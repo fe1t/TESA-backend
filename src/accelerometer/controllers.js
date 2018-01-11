@@ -26,23 +26,25 @@ export const fetch = (req, res, teamId) => {
     }
     data = data.data.data
     const waiter = await Promise.all(
-      data.map(d =>
-        Accelerometer.find({ sensID: d.sensID })
-          .then(doc => {
-            if (doc.length) {
-              console.log(teamID, 'Accelerometer already exists')
-            } else {
-              d.teamID = teamID
-              let D = new Accelerometer(d)
-              D.save(err => {
-                if (err) throw err
-                console.log(teamID, 'Successfully saved Accelerometer')
-              })
-            }
+      data.map(
+        d => {
+          // Accelerometer.find({ sensID: d.sensID })
+          //   .then(doc => {
+          //     if (doc.length) {
+          //       console.log(teamID, 'Accelerometer already exists')
+          //     } else {
+          d.teamID = teamID
+          let D = new Accelerometer(d)
+          D.save(err => {
+            if (err) throw err
+            console.log(teamID, 'Successfully saved Accelerometer')
           })
-          .catch(err => {
-            console.log(err)
-          })
+        }
+        //     }
+        //   })
+        //   .catch(err => {
+        //     console.log(err)
+        //   })
       )
     )
     ret.message = 'Successfully saved'

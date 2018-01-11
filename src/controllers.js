@@ -9,7 +9,8 @@ import { fetch as fetchTemperature, filterByTimeRange as filterTemperature } fro
 
 export const fetchAll = async (req, res) => {
   let a = []
-  for (var teamId = 1; teamId <= 2; teamId++) {
+  let error = false
+  for (var teamId = 1; teamId <= 60; teamId++) {
     a.push(
       fetchAccelerometer(req, res, teamId),
       // fetchGyroscope(req, res, teamId),
@@ -20,13 +21,19 @@ export const fetchAll = async (req, res) => {
       // fetchPressure(req, res, teamId),
       fetchTemperature(req, res, teamId)
     )
+    if (teamId % 10 == 0) {
+      console.log('fetching ', teamId)
+      await Promise.all(a).catch(err => {
+        error = true
+      })
+      a = []
+    }
   }
-  return await Promise.all(a)
-    .then(() => res.json({ status: 'Done fetching' }))
-    .catch(err => {
-      console.log(err)
-      res.json({ status: 'Error' })
-    })
+  if (error) {
+    res.json({ status: 'Error' })
+  } else {
+    res.json({ status: 'Done fetching' })
+  }
 }
 
 export const filterAll = (req, res) => {

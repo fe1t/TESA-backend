@@ -26,23 +26,31 @@ export const fetch = (req, res, teamId) => {
     }
     data = data.data.data
     const waiter = await Promise.all(
-      data.map(d =>
-        Temperature.find({ sensID: d.sensID })
-          .then(doc => {
-            if (doc.length) {
-              console.log(teamID, 'Temperature already exists')
-            } else {
-              d.teamID = teamID
-              let D = new Temperature(d)
-              D.save(err => {
-                if (err) throw err
-                console.log(teamID, 'Successfully saved Temperature')
-              })
-            }
+      data.map(
+        d => {
+          d.teamID = teamID
+          let D = new Temperature(d)
+          D.save(err => {
+            if (err) throw err
+            console.log(teamID, 'Successfully saved Temperature')
           })
-          .catch(err => {
-            console.log(err)
-          })
+        }
+        // Temperature.find({ sensID: d.sensID })
+        //   .then(doc => {
+        //     if (doc.length) {
+        //       console.log(teamID, 'Temperature already exists')
+        //     } else {
+        //       d.teamID = teamID
+        //       let D = new Temperature(d)
+        //       D.save(err => {
+        //         if (err) throw err
+        //         console.log(teamID, 'Successfully saved Temperature')
+        //       })
+        //     }
+        //   })
+        //   .catch(err => {
+        //     console.log(err)
+        //   })
       )
     )
     ret.message = 'Successfully saved'

@@ -25,24 +25,32 @@ export const fetch = (req, res, teamId) => {
       return resolve(ret)
     }
     data = data.data.data
+    console.log(teamID, 'Din1 is Fetching')
     const waiter = await Promise.all(
-      data.map(d =>
-        Din1.find({ sensID: d.sensID })
-          .then(doc => {
-            if (doc.length) {
-              console.log(teamID, 'Din1 already exists')
-            } else {
-              d.teamID = teamID
-              let D = new Din1(d)
-              D.save(err => {
-                if (err) throw err
-                console.log(teamID, 'Successfully saved Din1')
-              })
-            }
+      data.map(
+        d => {
+          d.teamID = teamID
+          let D = new Din1(d)
+          D.save(err => {
+            if (err) throw err
+            console.log(teamID, 'Successfully saved Din1')
           })
-          .catch(err => {
-            console.log(err)
-          })
+        }
+        // Din1.find({ sensID: d.sensID })
+        //   .then(doc => {
+        //     if (doc.length) {
+        //     } else {
+        //       d.teamID = teamID
+        //       let D = new Din1(d)
+        //       D.save(err => {
+        //         if (err) throw err
+        //         // console.log(teamID, 'Successfully saved Din1')
+        //       })
+        //     }
+        //   })
+        //   .catch(err => {
+        //     console.log(err)
+        //   })
       )
     )
     ret.message = 'Successfully saved'
