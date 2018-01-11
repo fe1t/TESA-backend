@@ -1,9 +1,10 @@
 import cron from 'node-cron'
+import { fetchUpdateAll } from 'src/controllers'
 
 export const updateTask = cron.schedule(
-  '*/2 * * * * *',
+  '* * * * *',
   () => {
-    console.log('fuck')
+    fetchUpdateAll()
   },
   false
 )

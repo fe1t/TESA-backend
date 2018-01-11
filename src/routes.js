@@ -26,7 +26,7 @@ apiRouter.get('/fetchAll', (req, res) => {
   fetchAll(req, res)
 })
 apiRouter.get('/fetchUpdateAll', (req, res) => {
-  fetchUpdateAll(req, res)
+  fetchUpdateAll(req, res).then(() => res.json())
 })
 apiRouter.get('/allTeamSensor/:startTime/:endTime', (req, res) => {
   filterAll(req, res)

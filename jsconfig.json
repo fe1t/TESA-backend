@@ -13,6 +13,7 @@
             "src/*": ["src/*"],
             "config/*": ["config/*"],
             "common/*": ["src/common/*"],
+            "modules/": ["src/modules/*"],
         },
         "plugins": [{
             "name": "typescript-styled-plugin",

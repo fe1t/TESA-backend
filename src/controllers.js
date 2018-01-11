@@ -51,7 +51,7 @@ export const fetchUpdateAll = async (req, res) => {
   if (error) {
     console.log('Error')
   } else {
-    console.log('Done fetching')
+    console.log('Done fetching [ALL]')
   }
 }
 
