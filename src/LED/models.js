@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
 const LEDSchema = mongoose.Schema({
-  // teamID: {
-  //   type: Number
-  // },
+  teamID: {
+    type: Number
+  },
   sensID: {
     type: String
   },
@@ -11,7 +11,7 @@ const LEDSchema = mongoose.Schema({
     type: String
   },
   date: {
-    type: String,
+    type: Date,
     default: Date.now()
   }
 })

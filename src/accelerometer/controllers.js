@@ -56,3 +56,19 @@ export const filterByHourAgo = req => {
     }
   })
 }
+
+export const filterByTimeRange = (req, res) => {
+  return new Promise((resolve, reject) => {
+    let startTime = moment(req.params.startTime, 'HHmm').toDate()
+    let endTime = moment(req.params.endTime, 'HHmm').toDate()
+
+    Accelerometer.find({
+      $and: [{ date: { $lte: endTime } }, { date: { $gte: startTime } }]
+    }).exec(function(err, accelerometers) {
+      if (err) reject(err)
+      return resolve({
+        data: accelerometers
+      })
+    })
+  })
+}

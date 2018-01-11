@@ -26,5 +26,18 @@ apiRouter.use('/temperature', temperatureApi)
 apiRouter.get('/fetchAll', (req, res) => {
   fetchAll(req, res)
 })
+apiRouter.get('/allTeamSensor/:startTime/:endTime', (req, res) => {
+  let ret = {}
+  Promise.all([
+    accelerometerApi.controllers.filterByTimeRange(req, res),
+    din1Api.controllers.filterByTimeRange(req, res),
+    temperatureApi.controllers.filterByTimeRange(req, res)
+  ]).then(arrayOfData => {
+    arrayOfData.forEach(d => {
+      ret = ret.concat(d)
+    })
+    res.json(ret)
+  })
+})
 
 router.use('/animals', animalRouter)

@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
 const temperatureSchema = mongoose.Schema({
-  // teamID: {
-  //   type: Number
-  // },
+  teamID: {
+    type: Number
+  },
   sensID: {
     type: String
   },
@@ -11,7 +11,7 @@ const temperatureSchema = mongoose.Schema({
     type: String
   },
   date: {
-    type: String,
+    type: Date,
     default: Date.now()
   }
 })

@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
 const magnetometerSchema = mongoose.Schema({
-  // teamID: {
-  //   type: Number
-  // },
+  teamID: {
+    type: Number
+  },
   sensID: {
     type: String
   },
@@ -17,7 +17,7 @@ const magnetometerSchema = mongoose.Schema({
     type: String
   },
   date: {
-    type: String,
+    type: Date,
     default: Date.now()
   }
 })

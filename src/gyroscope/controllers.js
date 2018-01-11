@@ -55,3 +55,19 @@ export const filterByHourAgo = req => {
     }
   })
 }
+
+export const filterByTimeRange = req => {
+  return new Promise((resolve, reject) => {
+    let startTime = moment(req.params.startTime, 'HHmm').toDate()
+    let endTime = moment(req.params.endTime, 'HHmm').toDate()
+
+    Gyroscope.find({
+      $and: [{ date: { $lte: endTime } }, { date: { $gte: startTime } }]
+    }).exec(function(err, gyroscopes) {
+      if (err) reject(err)
+      return resolve({
+        data: gyroscopes
+      })
+    })
+  })
+}
