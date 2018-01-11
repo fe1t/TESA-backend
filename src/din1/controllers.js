@@ -16,7 +16,6 @@ export const testPost = req => {
 }
 
 export const fetch = (req, res, teamId) => {
-  let resolveMessage = ''
   return new Promise(async (resolve, reject) => {
     const teamID = teamId || req.params.teamId
     let data = await Api.getDin1(teamID)
@@ -28,27 +27,22 @@ export const fetch = (req, res, teamId) => {
     data = data.data.data
     const waiter = await Promise.all(
       data.map(d =>
-        Din1.find({ sensID: d.sensID }, (err, doc) => {
-          return new Promise((resolve, reject) => {
+        Din1.find({ sensID: d.sensID })
+          .then(doc => {
             if (doc.length) {
-              resolveMessage = 'Din1 already exists'
-              console.log(teamID, resolveMessage)
-              resolve(resolveMessage)
+              console.log(teamID, 'Din1 already exists')
             } else {
               d.teamID = teamID
               let D = new Din1(d)
               D.save(err => {
-                if (err) {
-                  console.log(err)
-                  resolve(err)
-                }
-                resolveMessage = 'Successfully saved Din1'
-                console.log(teamID, resolveMessage)
-                resolve(resolveMessage)
+                if (err) throw err
+                console.log(teamID, 'Successfully saved Din1')
               })
             }
           })
-        })
+          .catch(err => {
+            console.log(err)
+          })
       )
     )
     ret.message = 'Successfully saved'

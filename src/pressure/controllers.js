@@ -16,39 +16,33 @@ export const testPost = req => {
 }
 
 export const fetch = (req, res, teamId) => {
-  let resolveMessage = ''
   return new Promise(async (resolve, reject) => {
     const teamID = teamId || req.params.teamId
     let data = await Api.getPressure(teamID)
     let ret = { teamId: teamID }
     if (data.data.statusCode != '00') {
       ret.message = 'Sensor data not found'
-      return reject(ret)
+      return resolve(ret)
     }
     data = data.data.data
     const waiter = await Promise.all(
       data.map(d =>
-        Pressure.find({ sensID: d.sensID }, (err, doc) => {
-          return new Promise((resolve, reject) => {
+        Pressure.find({ sensID: d.sensID })
+          .then(doc => {
             if (doc.length) {
-              resolveMessage = 'Pressure already exists'
-              console.log(teamID, resolveMessage)
-              resolve(resolveMessage)
+              console.log(teamID, 'Pressure already exists')
             } else {
               d.teamID = teamID
               let D = new Pressure(d)
               D.save(err => {
-                if (err) {
-                  console.log(err)
-                  resolve(err)
-                }
-                resolveMessage = 'Successfully saved Pressure'
-                console.log(teamID, resolveMessage)
-                resolve(resolveMessage)
+                if (err) throw err
+                console.log(teamID, 'Successfully saved Pressure')
               })
             }
           })
-        })
+          .catch(err => {
+            console.log(err)
+          })
       )
     )
     ret.message = 'Successfully saved'

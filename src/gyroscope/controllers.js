@@ -16,39 +16,33 @@ export const testPost = req => {
 }
 
 export const fetch = (req, res, teamId) => {
-  let resolveMessage = ''
   return new Promise(async (resolve, reject) => {
     const teamID = teamId || req.params.teamId
     let data = await Api.getGyroscope(teamID)
     let ret = { teamId: teamID }
     if (data.data.statusCode != '00') {
       ret.message = 'Sensor data not found'
-      return reject(ret)
+      return resolve(ret)
     }
     data = data.data.data
     const waiter = await Promise.all(
       data.map(d =>
-        Gyroscope.find({ sensID: d.sensID }, (err, doc) => {
-          return new Promise((resolve, reject) => {
+        Gyroscope.find({ sensID: d.sensID })
+          .then(doc => {
             if (doc.length) {
-              resolveMessage = 'Gyroscope already exists'
-              console.log(teamID, resolveMessage)
-              resolve(resolveMessage)
+              console.log(teamID, 'Gyroscope already exists')
             } else {
               d.teamID = teamID
               let D = new Gyroscope(d)
               D.save(err => {
-                if (err) {
-                  console.log(err)
-                  resolve(err)
-                }
-                resolveMessage = 'Successfully saved Gyroscope'
-                console.log(teamID, resolveMessage)
-                resolve(resolveMessage)
+                if (err) throw err
+                console.log(teamID, 'Successfully saved Gyroscope')
               })
             }
           })
-        })
+          .catch(err => {
+            console.log(err)
+          })
       )
     )
     ret.message = 'Successfully saved'

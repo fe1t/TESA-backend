@@ -16,9 +16,8 @@ export const testPost = req => {
 }
 
 export const fetch = (req, res, teamId) => {
-  let resolveMessage = ''
   return new Promise(async (resolve, reject) => {
-    const teamID = req.params.teamId || teamId
+    const teamID = teamId || req.params.teamId
     let data = await Api.getTemperature(teamID)
     let ret = { teamId: teamID }
     if (data.data.statusCode != '00') {
@@ -28,27 +27,22 @@ export const fetch = (req, res, teamId) => {
     data = data.data.data
     const waiter = await Promise.all(
       data.map(d =>
-        Temperature.find({ sensID: d.sensID }, (err, doc) => {
-          return new Promise((resolve, reject) => {
+        Temperature.find({ sensID: d.sensID })
+          .then(doc => {
             if (doc.length) {
-              resolveMessage = 'Temperature already exists'
-              console.log(teamID, resolveMessage)
-              resolve(resolveMessage)
+              console.log(teamID, 'Temperature already exists')
             } else {
               d.teamID = teamID
               let D = new Temperature(d)
               D.save(err => {
-                if (err) {
-                  console.log(err)
-                  resolve(err)
-                }
-                resolveMessage = 'Successfully saved Temperature'
-                console.log(teamID, resolveMessage)
-                resolve(resolveMessage)
+                if (err) throw err
+                console.log(teamID, 'Successfully saved Temperature')
               })
             }
           })
-        })
+          .catch(err => {
+            console.log(err)
+          })
       )
     )
     ret.message = 'Successfully saved'
