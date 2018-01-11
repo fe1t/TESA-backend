@@ -27,7 +27,7 @@ export const fetchAll = async (req, res) => {
   if (error) {
     res.json({ status: 'Error' })
   } else {
-    res.json({ status: 'Done fetching' })
+    res.json({ status: 'Done fetching [ALL]' })
   }
 }
 

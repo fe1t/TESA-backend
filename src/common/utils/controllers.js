@@ -1,9 +1,10 @@
 import moment from 'moment'
 
-const saveObject = (D, d, teamID) => {
+const saveObject = (Model, d, teamID) => {
+  let D = new Model(d)
   return D.save()
     .then(() => {
-      console.log(teamID, 'Successfully saved Model')
+      console.log(teamID, `Successfully saved ${Model.modelName}`)
       return Promise.resolve()
     })
     .catch(err => {
@@ -26,8 +27,7 @@ export default {
       const waiter = await Promise.all(
         data.map(d => {
           d.teamID = teamID
-          let D = new Model(d)
-          return saveObject(D, d, teamID)
+          return saveObject(Model, d, teamID)
         })
       ).then(() => {
         console.log(`Done fetching [${teamID}]`)
@@ -52,11 +52,10 @@ export default {
           return Model.find({ $and: [{ sensID: d.sensID }, { teamID: teamID }] })
             .then(doc => {
               if (doc.length) {
-                console.log(teamID, 'Model already exists')
+                console.log(teamID, `${Model.modelName} already exists`)
               } else {
                 d.teamID = teamID
-                let D = new Model(d)
-                return saveObject(D, d, teamID)
+                return saveObject(Model, d, teamID)
               }
             })
             .catch(err => {
@@ -109,19 +108,14 @@ export default {
 
   filterByTimeRange: (req, res, Model) => {
     return new Promise((resolve, reject) => {
-      let startTime = moment(req.params.startTime, 'HHmm').toDate()
-      let endTime = moment(req.params.endTime, 'HHmm').toDate()
-
+      let startTime = moment(`2018/01/11 ${req.params.startTime}`, 'YYYY/MM/DD HHmm').toDate()
+      let endTime = moment(`2018/01/11 ${req.params.endTime}`, 'YYYY/MM/DD HHmm').toDate()
       Model.find({
         $and: [{ date: { $lte: endTime } }, { date: { $gte: startTime } }]
       })
         .sort('date')
-        .then(data => {
-          return resolve({
-            data
-          })
-        })
-        .catch(err => resolve(err))
+        .then(data => resolve({ data }))
+        .catch(err => reject({ data: err }))
     })
   }
 }

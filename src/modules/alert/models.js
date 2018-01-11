@@ -8,6 +8,10 @@ const alertSchema = mongoose.Schema({
   description: {
     type: String,
     default: 'ALERT !'
+  },
+  date: {
+    type: Date,
+    default: Date.now()
   }
 })
 
